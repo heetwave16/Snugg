@@ -28,11 +28,13 @@ export const Route = createFileRoute("/_authenticated/groups/$groupId/")({
   component: GroupPage,
 });
 
-const TABS = ["Albums", "Feed", "Upload", "Polls", "Capsules", "People"] as const;
+const TABS = ["Feed", "Albums", "Vault", "People"] as const;
 
 function GroupPage() {
   const { groupId } = Route.useParams();
-  const [tab, setTab] = useState<(typeof TABS)[number]>("Albums");
+  const [tab, setTab] = useState<(typeof TABS)[number]>("Feed");
+  const [vaultSubTab, setVaultSubTab] = useState<"polls" | "capsules">("polls");
+  const [showUpload, setShowUpload] = useState(false);
   const { group, members } = useGroup(groupId);
   const media = useGroupMedia(groupId);
   const { user } = useSession();
@@ -84,19 +86,42 @@ function GroupPage() {
       title={group.data?.name ?? "Group"}
       subtitle={`${members.data?.length ?? 0} members · ${media.data?.length ?? 0} memories`}
       action={
-        <Link to="/home" className="press rounded-xl bg-secondary p-2" aria-label="Back">
-          <ArrowLeft className="size-4" strokeWidth={1.8} />
-        </Link>
+        <div className="flex items-center gap-2">
+          <Button
+            size="sm"
+            onClick={() => setShowUpload((v) => !v)}
+            className="press h-8 rounded-full px-3 text-xs font-semibold"
+          >
+            {showUpload ? "Done" : "+ Add"}
+          </Button>
+          <Link to="/home" className="press rounded-xl bg-secondary p-2" aria-label="Back">
+            <ArrowLeft className="size-4" strokeWidth={1.8} />
+          </Link>
+        </div>
       }
     >
-      <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
+      {showUpload ? (
+        <div className="rise mb-4">
+          <UploadSheet
+            groupId={groupId}
+            onUploaded={() => {
+              setShowUpload(false);
+              media.refetch();
+            }}
+          />
+        </div>
+      ) : null}
+
+      <div className="mb-4 grid grid-cols-4 rounded-2xl border border-border/50 bg-secondary/60 p-1 backdrop-blur-sm">
         {TABS.map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={cn(
-              "press shrink-0 rounded-full px-4 py-2 text-sm",
-              tab === t ? "bg-primary text-primary-foreground" : "bg-secondary",
+              "press rounded-xl py-2 text-center text-xs font-semibold transition-all",
+              tab === t
+                ? "bg-card text-foreground shadow-soft"
+                : "text-muted-foreground hover:text-foreground",
             )}
           >
             {t}
@@ -104,7 +129,6 @@ function GroupPage() {
         ))}
       </div>
 
-      {tab === "Albums" ? <AlbumsTab groupId={groupId} /> : null}
       {tab === "Feed" ? (
         <FeedTab
           groupId={groupId}
@@ -115,27 +139,51 @@ function GroupPage() {
           onChanged={() => media.refetch()}
         />
       ) : null}
-      {tab === "Upload" ? (
-        <UploadSheet groupId={groupId} onUploaded={() => media.refetch()} />
+
+      {tab === "Albums" ? <AlbumsTab groupId={groupId} /> : null}
+
+      {tab === "Vault" ? (
+        <div className="space-y-4">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setVaultSubTab("polls")}
+              className={cn(
+                "press flex-1 rounded-xl py-1.5 text-xs font-semibold",
+                vaultSubTab === "polls" ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground",
+              )}
+            >
+              Photo Polls
+            </button>
+            <button
+              onClick={() => setVaultSubTab("capsules")}
+              className={cn(
+                "press flex-1 rounded-xl py-1.5 text-xs font-semibold",
+                vaultSubTab === "capsules" ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground",
+              )}
+            >
+              Time Capsules
+            </button>
+          </div>
+          {vaultSubTab === "polls" ? (
+            <PollsTab
+              groupId={groupId}
+              media={media.data ?? []}
+              members={members.data ?? []}
+              currentUserId={currentUserId}
+              isAdmin={!!isAdmin}
+            />
+          ) : (
+            <CapsulesTab
+              groupId={groupId}
+              media={media.data ?? []}
+              currentUserId={currentUserId}
+              isAdmin={!!isAdmin}
+              onChanged={() => media.refetch()}
+            />
+          )}
+        </div>
       ) : null}
-      {tab === "Polls" ? (
-        <PollsTab
-          groupId={groupId}
-          media={media.data ?? []}
-          members={members.data ?? []}
-          currentUserId={currentUserId}
-          isAdmin={!!isAdmin}
-        />
-      ) : null}
-      {tab === "Capsules" ? (
-        <CapsulesTab
-          groupId={groupId}
-          media={media.data ?? []}
-          currentUserId={currentUserId}
-          isAdmin={!!isAdmin}
-          onChanged={() => media.refetch()}
-        />
-      ) : null}
+
       {tab === "People" && group.data ? (
         <MembersTab
           group={group.data}

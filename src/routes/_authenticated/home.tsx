@@ -56,19 +56,18 @@ function HomePage() {
       title="Snugg"
       subtitle="Your shared scrapbooks"
       action={
-        <Button asChild size="sm" className="press rounded-xl">
+        <Button asChild size="sm" className="press h-9 rounded-full px-4 text-xs font-semibold">
           <Link to="/groups">
-            <Plus className="size-4" strokeWidth={2} /> Group
+            <Plus className="size-3.5" strokeWidth={2.2} /> New Group
           </Link>
         </Button>
       }
     >
       <VaultWidget />
       {groups.isLoading ? (
-
-        <div className="space-y-3">
+        <div className="space-y-4">
           {[0, 1].map((i) => (
-            <div key={i} className="h-44 animate-pulse rounded-2xl bg-sand" />
+            <div key={i} className="h-48 animate-pulse rounded-3xl border border-border/40 bg-secondary/50" />
           ))}
         </div>
       ) : groups.data?.length ? (
@@ -79,30 +78,35 @@ function HomePage() {
               to="/groups/$groupId"
               params={{ groupId: group.id }}
               style={{ animationDelay: `${i * 45}ms` }}
-              className="rise press card-soft block overflow-hidden"
+              className="rise press group block overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all hover:border-border"
             >
-              <div className="relative h-40 bg-sand">
+              <div className="relative h-44 w-full overflow-hidden bg-gradient-to-br from-secondary via-secondary/70 to-card">
                 {group.coverUrl ? (
                   <img
                     src={group.coverUrl}
                     alt={group.name}
                     loading="lazy"
-                    className="size-full object-cover"
+                    className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <div className="flex size-full items-center justify-center text-primary/70">
-                    <CalendarHeart className="size-9" strokeWidth={1.4} />
+                  <div className="flex size-full items-center justify-center text-primary/60">
+                    <CalendarHeart className="size-10" strokeWidth={1.5} />
                   </div>
                 )}
-              </div>
-              <div className="flex items-center justify-between px-4 py-3">
-                <div>
-                  <h2 className="text-lg font-semibold">{group.name}</h2>
-                  <p className="text-xs text-muted-foreground">code {group.invite_code}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute bottom-3 left-4 right-4 flex items-end justify-between text-white">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="truncate text-lg font-bold tracking-tight text-white drop-shadow-sm">
+                      {group.name}
+                    </h2>
+                    <p className="text-[11px] font-mono tracking-widest text-white/80 uppercase">
+                      #{group.invite_code}
+                    </p>
+                  </div>
+                  <span className="flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+                    <Images className="size-3.5" strokeWidth={2} /> {group.count}
+                  </span>
                 </div>
-                <span className="flex items-center gap-1 rounded-full bg-secondary px-3 py-1 text-xs text-secondary-foreground">
-                  <Images className="size-3.5" strokeWidth={1.7} /> {group.count}
-                </span>
               </div>
             </Link>
           ))}
@@ -112,7 +116,7 @@ function HomePage() {
           title="No groups yet"
           body="Start a group for your friends, or join one with an invite code."
           action={
-            <Button asChild className="press mt-2 rounded-xl">
+            <Button asChild className="press mt-2 h-11 rounded-full px-6 text-sm font-semibold">
               <Link to="/groups">Create or join</Link>
             </Button>
           }
