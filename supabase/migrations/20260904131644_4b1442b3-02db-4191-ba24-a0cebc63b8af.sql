@@ -1,0 +1,1 @@
+CREATE POLICY "creators read own groups" ON public.groups FOR SELECT TO authenticated USING (created_by = auth.uid());
