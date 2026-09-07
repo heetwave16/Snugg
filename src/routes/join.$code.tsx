@@ -56,7 +56,7 @@ function JoinPage() {
   });
 
   return (
-    <div className="paper flex min-h-screen items-center justify-center bg-background px-6">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6">
       <div className="rise card-soft w-full max-w-sm space-y-4 p-7 text-center">
         <PartyPopper className="mx-auto size-8 text-primary" strokeWidth={1.6} />
         <h1 className="text-2xl font-semibold">You're invited</h1>

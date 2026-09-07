@@ -54,7 +54,7 @@ export function MediaGrid({
                 )}
               />
             ) : (
-              <span className="block size-full animate-pulse bg-sand" />
+              <span className="block size-full animate-pulse bg-muted" />
             )}
             {item.kind === "video" ? (
               <span className="absolute bottom-1.5 left-1.5 flex size-6 items-center justify-center rounded-full bg-ink/60 text-background">
