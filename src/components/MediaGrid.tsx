@@ -57,12 +57,12 @@ export function MediaGrid({
               <span className="block size-full animate-pulse bg-muted" />
             )}
             {item.kind === "video" ? (
-              <span className="absolute bottom-1.5 left-1.5 flex size-6 items-center justify-center rounded-full bg-ink/60 text-background">
+              <span className="absolute bottom-1.5 left-1.5 flex size-6 items-center justify-center rounded-full bg-foreground/60 text-background">
                 <Play className="size-3" strokeWidth={2} />
               </span>
             ) : null}
             {locked ? (
-              <span className="absolute inset-0 flex items-center justify-center bg-ink/25 text-background">
+              <span className="absolute inset-0 flex items-center justify-center bg-foreground/25 text-background">
                 <Lock className="size-5" strokeWidth={1.6} />
               </span>
             ) : null}
@@ -72,7 +72,7 @@ export function MediaGrid({
                   "absolute right-1.5 top-1.5 flex size-6 items-center justify-center rounded-full border",
                   isSelected
                     ? "pop border-primary bg-primary text-primary-foreground"
-                    : "border-background/70 bg-ink/25 text-background",
+                    : "border-background/70 bg-foreground/25 text-background",
                 )}
               >
                 {isSelected ? <Check className="size-3.5" strokeWidth={2.5} /> : null}
