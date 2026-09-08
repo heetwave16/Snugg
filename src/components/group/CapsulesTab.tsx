@@ -162,7 +162,7 @@ export function CapsulesTab({
       {capsules.isLoading ? (
         <div className="space-y-3">
           {[0, 1].map((i) => (
-            <div key={i} className="h-20 animate-pulse rounded-2xl bg-sand" />
+            <div key={i} className="h-20 animate-pulse rounded-2xl bg-muted" />
           ))}
         </div>
       ) : capsules.data?.length ? (

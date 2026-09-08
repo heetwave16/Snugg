@@ -182,7 +182,7 @@ export function MediaViewer({
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-ink/95 text-background backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex flex-col bg-foreground/95 text-background backdrop-blur-sm">
       <div className="flex items-center justify-between px-4 pt-[max(1rem,env(safe-area-inset-top))]">
         <button onClick={onClose} className="press rounded-full bg-background/15 p-2">
           <X className="size-5" strokeWidth={1.8} />

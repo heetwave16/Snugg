@@ -19,6 +19,7 @@ type Item = { id: string; file: File; caption: string; edited: boolean };
 
 export function UploadSheet({ groupId, albumId, lockedUntil, onUploaded }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [progress, setProgress] = useState<Record<string, number>>({});
   const [busy, setBusy] = useState(false);
@@ -103,7 +104,7 @@ export function UploadSheet({ groupId, albumId, lockedUntil, onUploaded }: Props
   const editItem = items.find((i) => i.id === editing);
 
   return (
-    <div className="card-soft p-4">
+    <div className="card-soft border border-border/60 bg-card/80 p-4 shadow-sm backdrop-blur-sm">
       <input
         ref={inputRef}
         type="file"
@@ -115,25 +116,44 @@ export function UploadSheet({ groupId, albumId, lockedUntil, onUploaded }: Props
           e.target.value = "";
         }}
       />
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        hidden
+        onChange={(e) => {
+          const files = Array.from(e.target.files ?? []);
+          if (files.length) {
+            add(files);
+            toast.success("Photo captured! Tap Customise to edit or add captions.");
+          }
+          e.target.value = "";
+        }}
+      />
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2.5">
         <button
           onClick={() => inputRef.current?.click()}
-          className="press flex flex-col items-center gap-1.5 rounded-2xl border border-dashed border-border px-4 py-6 text-center"
+          className="press flex flex-col items-center gap-2 rounded-2xl border border-border/80 bg-secondary/40 px-4 py-5 text-center transition-colors hover:bg-secondary/70"
         >
-          <ImagePlus className="size-6 text-primary" strokeWidth={1.6} />
-          <span className="text-sm font-medium">Pick from library</span>
+          <div className="flex size-10 items-center justify-center rounded-full bg-primary/15 text-primary">
+            <ImagePlus className="size-5" strokeWidth={2} />
+          </div>
+          <span className="text-xs font-semibold text-foreground">Choose Photos</span>
         </button>
         <button
-          onClick={() => setCamera(true)}
-          className="press flex flex-col items-center gap-1.5 rounded-2xl border border-dashed border-border px-4 py-6 text-center"
+          onClick={() => cameraInputRef.current?.click()}
+          className="press flex flex-col items-center gap-2 rounded-2xl border border-border/80 bg-secondary/40 px-4 py-5 text-center transition-colors hover:bg-secondary/70"
         >
-          <Camera className="size-6 text-primary" strokeWidth={1.6} />
-          <span className="text-sm font-medium">Take a photo</span>
+          <div className="flex size-10 items-center justify-center rounded-full bg-primary/15 text-primary">
+            <Camera className="size-5" strokeWidth={2} />
+          </div>
+          <span className="text-xs font-semibold text-foreground">Open Camera</span>
         </button>
       </div>
-      <p className="mt-2 text-center text-xs text-muted-foreground">
-        Images are compressed under 1MB with a thumbnail. Tap a photo to add filters and a caption.
+      <p className="mt-2.5 text-center text-[11px] text-muted-foreground">
+        Auto-compressed under 1MB. Tap Customise on any photo to add filters.
       </p>
 
       {items.length ? (
