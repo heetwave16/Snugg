@@ -58,10 +58,10 @@ function UploadPage() {
         <div className="space-y-4">
           <div className="flex gap-2">
             {[0, 1, 2].map((i) => (
-              <div key={i} className="h-9 w-24 animate-pulse rounded-full bg-sand" />
+              <div key={i} className="h-9 w-24 animate-pulse rounded-full bg-muted" />
             ))}
           </div>
-          <div className="h-44 animate-pulse rounded-2xl bg-sand" />
+          <div className="h-44 animate-pulse rounded-2xl bg-muted" />
         </div>
       ) : groups.data?.length ? (
         <div className="space-y-4">

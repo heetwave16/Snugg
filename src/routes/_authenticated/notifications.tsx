@@ -105,7 +105,7 @@ function NotificationsPage() {
       {items.isLoading ? (
         <div className="space-y-2">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-16 animate-pulse rounded-2xl bg-sand" />
+            <div key={i} className="h-16 animate-pulse rounded-2xl bg-muted" />
           ))}
         </div>
       ) : items.data?.length ? (

@@ -68,7 +68,7 @@ export function VaultWidget() {
     });
   }, [vault.data, alerted]);
 
-  if (vault.isLoading) return <div className="mb-4 h-32 animate-pulse rounded-2xl bg-sand" />;
+  if (vault.isLoading) return <div className="mb-4 h-32 animate-pulse rounded-2xl bg-muted" />;
   const d = vault.data;
   if (!d || !d.rows.length) return null;
 
@@ -139,7 +139,7 @@ function Strip({
       <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
         {items.map((m) => (
           <div key={m.id} className="w-28 shrink-0">
-            <div className="h-28 overflow-hidden rounded-xl bg-sand">
+            <div className="h-28 overflow-hidden rounded-xl bg-muted">
               {src(m) ? (
                 <img src={src(m)} alt={m.caption ?? title} loading="lazy" className="size-full object-cover" />
               ) : null}

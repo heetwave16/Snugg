@@ -129,7 +129,7 @@ export function PollsTab({
       )}
 
       {polls.isLoading ? (
-        <div className="h-44 animate-pulse rounded-2xl bg-sand" />
+        <div className="h-44 animate-pulse rounded-2xl bg-muted" />
       ) : polls.data?.length ? (
         polls.data.map((poll) => (
           <Poll

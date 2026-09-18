@@ -121,7 +121,7 @@ export function AlbumsTab({ groupId }: { groupId: string }) {
       {albums.isLoading ? (
         <div className="grid gap-3 sm:grid-cols-2">
           {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="h-20 animate-pulse rounded-2xl bg-sand" />
+            <div key={i} className="h-20 animate-pulse rounded-2xl bg-muted" />
           ))}
         </div>
       ) : albums.data?.length ? (

@@ -94,70 +94,81 @@ function GroupsPage() {
   });
 
   return (
-    <AppShell title="Groups" subtitle="Start something or join the crew">
-      <div className="space-y-5">
-        <section className="rise card-soft space-y-3 p-5">
-          <h2 className="text-lg font-semibold">Create a group</h2>
-          <div className="space-y-1.5">
-            <Label htmlFor="group-name">Group name</Label>
-            <Input
-              id="group-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Goa 2019 & forever"
-              className="h-11 rounded-xl"
+    <AppShell title="Groups" subtitle="Create a space or join with an invite code">
+      <div className="space-y-4">
+        <section className="rise rounded-3xl border border-border/60 bg-card p-5 shadow-sm">
+          <h2 className="text-base font-bold tracking-tight text-foreground">Create a Group</h2>
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Start a private shared scrapbook for your friends, trip, or crew.
+          </p>
+
+          <div className="mt-4 space-y-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="group-name" className="text-xs font-semibold">Group Name</Label>
+              <Input
+                id="group-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. Goa Trip 2026, The Crew"
+                className="h-11 rounded-2xl border-border/70 bg-secondary/30 text-sm"
+              />
+            </div>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={(e) => setCover(e.target.files?.[0] ?? null)}
             />
+            <button
+              onClick={() => fileRef.current?.click()}
+              className="press flex w-full items-center gap-3 rounded-2xl border border-border/70 bg-secondary/40 px-4 py-3 text-left text-xs font-semibold text-foreground transition-colors hover:bg-secondary/70"
+            >
+              <ImagePlus className="size-4 text-primary" strokeWidth={2} />
+              {cover ? cover.name : "Add a cover photo"}
+            </button>
+            <Button
+              className="press h-11 w-full rounded-full text-xs font-bold shadow-sm"
+              disabled={!name.trim() || create.isPending}
+              onClick={() => create.mutate()}
+            >
+              {create.isPending ? "Creating…" : "Create Group"}
+            </Button>
           </div>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            hidden
-            onChange={(e) => setCover(e.target.files?.[0] ?? null)}
-          />
-          <button
-            onClick={() => fileRef.current?.click()}
-            className="press flex w-full items-center gap-3 rounded-xl bg-secondary px-4 py-3 text-left text-sm"
-          >
-            <ImagePlus className="size-5 text-primary" strokeWidth={1.6} />
-            {cover ? cover.name : "Add a cover photo"}
-          </button>
-          <Button
-            className="press h-11 w-full rounded-xl"
-            disabled={!name.trim() || create.isPending}
-            onClick={() => create.mutate()}
-          >
-            {create.isPending ? "Creating…" : "Create group"}
-          </Button>
         </section>
 
-        <section className="rise card-soft space-y-3 p-5">
-          <h2 className="flex items-center gap-2 text-lg font-semibold">
-            <Users className="size-4 text-primary" strokeWidth={1.7} /> Join with a code
+        <section className="rise rounded-3xl border border-border/60 bg-card p-5 shadow-sm">
+          <h2 className="flex items-center gap-2 text-base font-bold tracking-tight text-foreground">
+            <Users className="size-4 text-primary" strokeWidth={2} /> Join with Code
           </h2>
-          <Input
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            placeholder="e.g. 7F2A9C1"
-            className="h-11 rounded-xl tracking-[0.2em]"
-          />
-          <label className="flex items-start gap-2 text-xs text-muted-foreground">
-            <Checkbox
-              checked={consent}
-              onCheckedChange={(v) => setConsent(v === true)}
-              className="mt-0.5"
+          <p className="mt-0.5 text-xs text-muted-foreground">
+            Enter the 7-character invite code shared with you.
+          </p>
+
+          <div className="mt-4 space-y-3">
+            <Input
+              value={code}
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
+              placeholder="e.g. 7F2A9C1"
+              className="h-11 rounded-2xl border-border/70 bg-secondary/30 text-center font-mono text-base font-bold tracking-[0.25em]"
             />
-            I consent to appearing in photos shared inside this group, and to being tagged by
-            members.
-          </label>
-          <Button
-            variant="secondary"
-            className="press h-11 w-full rounded-xl"
-            disabled={!code.trim() || !consent || join.isPending}
-            onClick={() => join.mutate()}
-          >
-            {join.isPending ? "Joining…" : "Join group"}
-          </Button>
+            <label className="flex items-start gap-2.5 text-xs text-muted-foreground">
+              <Checkbox
+                checked={consent}
+                onCheckedChange={(v) => setConsent(v === true)}
+                className="mt-0.5"
+              />
+              <span>I consent to appearing in photos shared inside this group, and to being tagged by members.</span>
+            </label>
+            <Button
+              variant="secondary"
+              className="press h-11 w-full rounded-full text-xs font-bold"
+              disabled={!code.trim() || !consent || join.isPending}
+              onClick={() => join.mutate()}
+            >
+              {join.isPending ? "Joining…" : "Join Group"}
+            </Button>
+          </div>
         </section>
       </div>
     </AppShell>

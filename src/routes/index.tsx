@@ -33,47 +33,51 @@ function Landing() {
   }, [loading, user, navigate]);
 
   return (
-    <div className="paper min-h-screen bg-background">
-      <div className="mx-auto flex max-w-md flex-col gap-7 px-6 pb-16 pt-14">
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="mx-auto flex max-w-md flex-col gap-6 px-5 pb-16 pt-12">
         <div className="rise">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">
-            Invite only
-          </p>
-          <h1 className="mt-3 text-5xl font-semibold leading-[1.05] text-foreground">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-semibold tracking-wider text-primary uppercase">
+            Private & Invite-Only
+          </span>
+          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
             Snugg
           </h1>
-          <p className="mt-3 text-base text-muted-foreground">
-            A warm little scrapbook for one friend group. No feeds for strangers, no algorithms —
-            just your people and the photos you took together.
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            A private shared camera roll for you and your friends. No stranger feeds, no algorithms —
+            just your crew and the memories you made together.
           </p>
         </div>
 
-        <img
-          src={heroCollage}
-          alt="Polaroid photos of friends scattered on cream linen"
-          width={1280}
-          height={960}
-          className="rise w-full rounded-2xl object-cover shadow-lift"
-        />
+        <div className="rise overflow-hidden rounded-3xl border border-border/60 bg-card shadow-lg">
+          <img
+            src={heroCollage}
+            alt="Photos of friends shared together"
+            width={1280}
+            height={960}
+            className="w-full object-cover"
+          />
+        </div>
 
-        <div className="rise card-soft space-y-3 p-5">
-          <Feature icon={<Camera className="size-4" strokeWidth={1.7} />}>
-            Event albums, a 3-column grid, and full-screen swipe viewing
+        <div className="rise space-y-2.5 rounded-3xl border border-border/60 bg-card/70 p-4 backdrop-blur-sm">
+          <Feature icon={<Camera className="size-4" strokeWidth={2} />}>
+            Event albums, chronological grid & swipe viewer
           </Feature>
-          <Feature icon={<Sparkles className="size-4" strokeWidth={1.7} />}>
-            Reactions, comments, tagging and “photos of me”
+          <Feature icon={<Sparkles className="size-4" strokeWidth={2} />}>
+            Reactions, comments, member tagging & "Photos of me"
           </Feature>
-          <Feature icon={<Lock className="size-4" strokeWidth={1.7} />}>
-            Time capsules that unlock on a future date
+          <Feature icon={<Lock className="size-4" strokeWidth={2} />}>
+            Time capsules that unlock on future dates
           </Feature>
         </div>
 
-        <Button asChild size="lg" className="press h-12 rounded-2xl text-base">
-          <Link to="/auth">Get your magic link</Link>
-        </Button>
-        <p className="text-center text-xs text-muted-foreground">
-          Add Snugg to your homescreen for the full app feel.
-        </p>
+        <div className="rise space-y-3 pt-2">
+          <Button asChild size="lg" className="press h-12 w-full rounded-full text-sm font-semibold shadow-md">
+            <Link to="/auth">Get Started with Magic Link</Link>
+          </Button>
+          <p className="text-center text-xs text-muted-foreground">
+            Install on your Android or iOS home screen for the full native app feel.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -81,8 +85,8 @@ function Landing() {
 
 function Feature({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-3 text-sm">
-      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/12 text-primary">
+    <div className="flex items-center gap-3 text-xs font-medium text-foreground">
+      <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary">
         {icon}
       </span>
       <span className="text-muted-foreground">{children}</span>
