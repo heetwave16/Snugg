@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Snugg",
+    "slug": "snugg",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#F8F5F0",
+      "resizeMode": "contain"
+    },
+    "scheme": "snugg",
+    "newArchEnabled": true,
+    "plugins": ["expo-router"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.snugg.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#F5EFE6"
+      },
+      "package": "com.snugg.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    }
+  }
+}
