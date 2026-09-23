@@ -1,29 +1,22 @@
-# Welcome to your Lovable project
+# Snugg
 
-This project was built with [Lovable](https://lovable.dev).
+Snugg is a private shared-memory app for college friend groups. This repository contains the first mobile foundation: a calm launch flow, mock Spaces, photo-first galleries, People and Profile screens, and an Expo Router navigation shell.
 
-## Build with Lovable
-
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
+## Run locally
 
 ```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
+npm install
+npm run start
 ```
 
-## Built with
+Then press `i` for iOS, `a` for Android, or `w` for the web preview.
 
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
+TypeScript can be checked with:
+
+```sh
+npm run typecheck
+```
+
+## Foundation boundaries
+
+All content is local mock data in `data/mockData.ts`. There is intentionally no authentication, Supabase client, database, storage, upload flow, permissions, comments, reactions, or backend integration in this stage. The `theme/`, `components/`, `data/`, and `types/` directories are intentionally separated so those capabilities can be introduced later without reshaping the app shell.
