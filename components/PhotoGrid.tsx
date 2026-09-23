@@ -1,16 +1,24 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { useState } from "react";
 
 import type { MediaItem } from "@/types";
 import { colors, spacing, typography } from "@/theme";
 
+const COLUMNS = 3;
+const GRID_GAP = 3;
+
 export function PhotoGrid({ media, onPress }: { media: MediaItem[]; onPress: (item: MediaItem) => void }) {
   const { width } = useWindowDimensions();
-  const gap = 3;
-  const tileWidth = Math.floor((width - spacing.lg * 2 - gap * 2) / 3);
+  const [gridWidth, setGridWidth] = useState<number | null>(null);
+  // The fallback keeps the first frame square before onLayout reports the real
+  // container width. Using the container width makes the component reusable
+  // outside of PageBody and keeps the grid correct on tablets and rotation.
+  const availableWidth = gridWidth ?? Math.max(width - spacing.lg * 2, 0);
+  const tileWidth = Math.floor((availableWidth - GRID_GAP * (COLUMNS - 1)) / COLUMNS);
 
   return (
-    <View style={[styles.grid, { gap }]}>
+    <View onLayout={(event) => setGridWidth(event.nativeEvent.layout.width)} style={[styles.grid, { gap: GRID_GAP }]}>
       {media.map((item) => (
         <Pressable
           accessibilityLabel={`Open ${item.kind}`}

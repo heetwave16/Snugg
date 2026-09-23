@@ -96,11 +96,31 @@ export const mockMembers: Member[] = [
   { id: "dev", name: "Dev", initials: "D", uploads: 28, source: image07 },
 ];
 
-export const mockAlbums = [
-  { id: "beach-day", title: "The beach day", date: "24 Aug", count: 84, cover: image01 },
-  { id: "first-night", title: "First night", date: "23 Aug", count: 67, cover: image04 },
-  { id: "check-in", title: "Check in", date: "22 Aug", count: 42, cover: image07 },
-] as const;
+export type MockAlbum = {
+  id: string;
+  title: string;
+  date: string;
+  count: number;
+  cover: ImageSourcePropType;
+};
+
+export const mockAlbumsBySpace: Record<string, MockAlbum[]> = {
+  "goa-trip-26": [
+    { id: "beach-day", title: "The beach day", date: "24 Aug", count: 84, cover: image01 },
+    { id: "first-night", title: "First night", date: "23 Aug", count: 67, cover: image04 },
+    { id: "check-in", title: "Check in", date: "22 Aug", count: 42, cover: image07 },
+  ],
+  "college-fest": [
+    { id: "opening-night", title: "Opening night", date: "12 Mar", count: 58, cover: image07 },
+    { id: "between-sets", title: "Between sets", date: "11 Mar", count: 71, cover: image10 },
+    { id: "first-day", title: "First day", date: "10 Mar", count: 85, cover: image01 },
+  ],
+  "weekend-memories": [
+    { id: "saturday", title: "Saturday", date: "07 Feb", count: 34, cover: image10 },
+    { id: "friday-night", title: "Friday night", date: "06 Feb", count: 29, cover: image04 },
+    { id: "slow-morning", title: "Slow morning", date: "06 Feb", count: 18, cover: image06 },
+  ],
+};
 
 export function getSpace(spaceId: string) {
   return mockSpaces.find((space) => space.id === spaceId) ?? mockSpaces[0];
@@ -108,6 +128,10 @@ export function getSpace(spaceId: string) {
 
 export function getMedia(spaceId: string) {
   return mockMediaBySpace[spaceId] ?? goaMedia;
+}
+
+export function getAlbums(spaceId: string) {
+  return mockAlbumsBySpace[spaceId] ?? mockAlbumsBySpace["goa-trip-26"];
 }
 
 export function getMediaItem(mediaId: string) {

@@ -6,7 +6,7 @@ import { AppScreen, PageBody } from "@/components/AppScreen";
 import { PhotoGrid } from "@/components/PhotoGrid";
 import { ScreenHeader } from "@/components/ScreenHeader";
 import { SectionHeading } from "@/components/SectionHeading";
-import { getMedia, getSpace, mockAlbums } from "@/data/mockData";
+import { getAlbums, getMedia, getSpace } from "@/data/mockData";
 import { colors, radii, spacing, typography } from "@/theme";
 
 export default function SpaceDetailScreen() {
@@ -15,6 +15,7 @@ export default function SpaceDetailScreen() {
   const id = typeof spaceId === "string" ? spaceId : "goa-trip-26";
   const space = getSpace(id);
   const media = getMedia(space.id);
+  const albums = getAlbums(space.id);
 
   return (
     <AppScreen tabBar tabSpaceId={space.id}>
@@ -58,7 +59,7 @@ export default function SpaceDetailScreen() {
         <View style={styles.albumSection}>
           <SectionHeading action={<Text style={styles.viewAll}>See all</Text>} title="Albums & dates" />
           <View style={styles.albumRow}>
-            {mockAlbums.map((album) => (
+            {albums.map((album) => (
               <View key={album.id} style={styles.album}>
                 <Image resizeMode="cover" source={album.cover} style={styles.albumImage} />
                 <Text numberOfLines={1} style={styles.albumTitle}>{album.title}</Text>
